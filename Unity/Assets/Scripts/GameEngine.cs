@@ -39,8 +39,8 @@ public class GameEngine : MonoBehaviour
         }
 
         GameObject playerSpawnPos = //haal hier het GameObject op uit path op (gebruik i=2, i2 = 2)
-        Debug.Log(enemyStart.transform.position);
-        GameObject enemyObj = Instantiate(pigModel, enemyStart.transform.position, Quaternion.identity);
+        Debug.Log(playerSpawnPos.transform.position);
+        GameObject playerObj = Instantiate(pigModel, playerSpawnPos.transform.position, Quaternion.identity);
         player = ??? //maak hier een player instance aan
 
 
