@@ -4,6 +4,7 @@
 fork dit project:
 https://github.com/progsen/cs_unity_programmatically_2dmaze
 
+clone /download het naar je harde schijf
 ![](img/result.PNG)
 
 ## meer in unity
