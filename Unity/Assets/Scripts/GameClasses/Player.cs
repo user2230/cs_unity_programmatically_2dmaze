@@ -4,58 +4,75 @@ using UnityEngine;
 
 public class Player
 {
-
     public GameObject obj;
+
     public Player(GameObject obj)
     {
         this.obj = obj;
-
     }
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
+    // This method checks if the player can move to the target position
     bool CanMoveTo(Vector3 newPos, Tile[][] path)
     {
-        for (int i = 0; i < path.Length; i++)
+        // Convert the new position to grid coordinates
+        int x = (int)(newPos.x / 2);
+        int z = (int)(newPos.z / 2);
+
+        // Check if the new position is within bounds of the grid
+        if (x < 0 || x >= path[0].Length || z < 0 || z >= path.Length)
         {
-            for (int i2 = 0; i2 < path[i].Length; i2++)
-            {
-                ???
-
-                //1) Pak hier eerst de huidige Tile die in [i][i2] zit
-                //2) check met een if of het de Tile een tower is
-                //3) vergelijk de newPos met de transform.position van de Tile
-
-
-                //4 als dat zo is return false!
-            }
+            return false;
         }
-        return true;
+
+        // Get the tile at the specified coordinates
+        Tile targetTile = path[z][x];
+
+        // Check if the tile is blocked by a tower or wall
+        if (targetTile.istower)
+        {
+            return false;  // Can't move to a blocked tile
+        }
+
+        return true;  // The tile is not blocked, move is allowed
     }
+
+    // Move the player to the new position if valid
     public void Move(Vector3 newPos, Tile[][] path)
     {
-        Debug.Log("======move");
         if (CanMoveTo(newPos, path))
         {
-            Debug.Log("======CanMoveTo");
-            obj.transform.position = newPos;
+            obj.transform.position = newPos;  // Move the player to the new position
         }
     }
+
+    // Handle movement input and apply the necessary changes to the player's position
     public void DoMove(Tile[][] path)
     {
-        Vector3 newPos = obj.transform.position;
-        ???
-        //kijk hier welke of de speler up,down,left of right ingedrukt heeft
-        
-            //Tip: alle tiles zijn 2x bij 2z
+        Vector3 newPos = obj.transform.position;  // Get current position of the player
 
-        //als dat zo is dan verander je newPos (wat nu de huidige player position is)
-            //bv:
-            // als right down dan move naar rechts (tel +2 bij de x van newpos op)
-            //roep de Move function aan, geef path door en geef newPos door
+        // Check for input and adjust the position
+        if (Input.GetKeyDown(KeyCode.W))  // Move up
+        {
+            newPos.z += 2;
+            obj.transform.rotation = Quaternion.Euler(0, 0, 0);  // Rotate player to face up
+        }
+        else if (Input.GetKeyDown(KeyCode.S))  // Move down
+        {
+            newPos.z -= 2;
+            obj.transform.rotation = Quaternion.Euler(0, 180, 0);  // Rotate player to face down
+        }
+        else if (Input.GetKeyDown(KeyCode.A))  // Move left
+        {
+            newPos.x -= 2;
+            obj.transform.rotation = Quaternion.Euler(0, -90, 0);  // Rotate player to face left
+        }
+        else if (Input.GetKeyDown(KeyCode.D))  // Move right
+        {
+            newPos.x += 2;
+            obj.transform.rotation = Quaternion.Euler(0, 90, 0);  // Rotate player to face right
+        }
 
-            //extra: roteer ook het GameObject van Player in de juiste richting
+        // Call the Move method to update the player's position
+        Move(newPos, path);
     }
 }

@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//class make oefening
 public class Tile
 {
-    //maak variabelen:
-    //?? hou hier je GameObject bij
-    //?? hou hier bij of je beweging blokkeerd (een tower /muur bent) gebruik een bool
+    public GameObject tileObject;
+    public bool istower;
 
-    public Tile()//pas deze constructor aan zodat GameObject & de bool meekomen
+    public Tile(GameObject tileObject, bool istower)
     {
+        this.tileObject = tileObject;
+        this.istower = istower;
     }
 }
+
